@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  # 1. 데이터베이스 서비스
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: memodb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql # DB 데이터를 로컬에 저장 (컨테이너 꺼져도 데이터 유지)
+
+  # 2. 웹 애플리케이션 서비스
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db # DB가 먼저 켜져야 실행됨
+    environment:
+      # 'db'는 위에서 정의한 서비스 이름과 같아야 함
+      DATABASE_URL: mysql+pymysql://user:password@db:3306/memodb
+
+volumes:
+  db_data:
