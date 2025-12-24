@@ -22,7 +22,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/kw_first_app:lastest
+          tags: ${{ secrets.DOCKER_USERNAME }}/kw_first_app:latest
 
       - name: Copy docker-compose file to EC2
         uses: appleboy/scp-action@master
