@@ -42,7 +42,7 @@ def get_db():
         yield db
     finally:
         db.close()
-
+ 
 # 5. API 엔드포인트
 @app.post("/memos/", response_model=MemoResponse)
 def create_memo(memo: MemoCreate, db: Session = Depends(get_db)):
